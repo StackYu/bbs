@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.xiaoyu2017.api.mapper.UserMapper">
+    <select id="getUserByUserNameAndPassword" parameterType="userBo" resultType="userDao">
+        SELECT *
+        FROM bbs.user
+        WHERE user_name = #{userName}
+          AND password = #{password}
+          AND `delete` = 0
+          AND `status` = 0;
+    </select>
+
+    <insert id="insertUserDao" parameterType="userBo">
+        INSERT INTO bbs.user (`user_name`, `uid`, `password`)
+        VALUES (#{userName}, #{uid}, #{password});
+    </insert>
+</mapper>
