@@ -36,8 +36,16 @@ public class JwtConfig implements InitializingBean {
             this.publicKey = RsaUtil.getPublicKey(pubKeyPath);
             this.privateKey = RsaUtil.getPrivateKey(priKeyPath);
         } catch (Exception e) {
-            log.error("初始化公钥和私钥失败！", e);
-            throw new RuntimeException(e);
+            try {
+                log.error("初始化公钥和私钥失败！重新生成公私钥，并获得。", e);
+                RsaUtil.generateKey(pubKeyPath, priKeyPath, "bbs", 3);
+                // 获取公钥和私钥
+                this.publicKey = RsaUtil.getPublicKey(pubKeyPath);
+                this.privateKey = RsaUtil.getPrivateKey(priKeyPath);
+            } catch (Exception ex) {
+                log.error("重新生成公私钥失败！重新获得公私钥失败！", e);
+                throw new RuntimeException(ex);
+            }
         }
     }
 

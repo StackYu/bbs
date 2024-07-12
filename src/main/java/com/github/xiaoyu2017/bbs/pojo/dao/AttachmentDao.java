@@ -1,7 +1,6 @@
 package com.github.xiaoyu2017.bbs.pojo.dao;
 
 import com.github.xiaoyu2017.bbs.pojo.BaseEntity;
-import com.github.xiaoyu2017.bbs.pojo.bean.AttachmentCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,13 +14,21 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Attachment extends BaseEntity implements Serializable {
+public class AttachmentDao extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 23897982786643123L;
 
+    /** 附件ID */
+    private String aid;
     /** 附件路径 */
     private String path;
-    /** 附件ID */
-    private Integer aid;
     /** 附件类型 */
-    private AttachmentCode code;
+    private Integer type;
+    /** 文件原始名称 */
+    private String originalFilename;
+    /** 文件MIME */
+    private String mime;
+    /** 文件大小 */
+    private Integer size;
+    /** 文件大小单位 */
+    private String sizeUnit;
 }

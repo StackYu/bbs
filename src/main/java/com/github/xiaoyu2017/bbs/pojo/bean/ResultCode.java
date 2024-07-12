@@ -36,7 +36,18 @@ public enum ResultCode {
     REGISTER_ERROR_400_1("401400", "请输入注册内容"),
     REGISTER_ERROR_400_2("402400", "请输正确用户名"),
     REGISTER_ERROR_400_3("403400", "请输正确用户密码"),
-    REGISTER_ERROR_500("400500", "注册失败，请稍后重试");
+    REGISTER_ERROR_500("400500", "注册失败，请稍后重试"),
+
+    // 附件上传
+    UPLOAD_SUCCESS_200("500200", "上传文件成功"),
+    UPLOAD_ERROR_400_1("501400", "上传文件不能为空"),
+    UPLOAD_ERROR_400_2("502400", "文件格式不正确"),
+    UPLOAD_ERROR_500("500500", "文件上传失败，请稍后重试"),
+
+    // 附件下载
+    DOWNLOAD_SUCCESS_200("600200", "下载文件成功"),
+    DOWNLOAD_ERROR_400_1("601400", "文件aid不能为空"),
+    DOWNLOAD_ERROR_500("600500", "文件下载失败，请稍后重试");
 
     ResultCode(String code, String message) {
         this.code = code;

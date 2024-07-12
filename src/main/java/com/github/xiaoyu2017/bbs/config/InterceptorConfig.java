@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class InterceptorConfig implements WebMvcConfigurer {
     @Autowired
     private AuthHandlerInterceptor authHandlerInterceptor;
-    private final String[] authWhiteList = {"/login", "/register"};
+    private final String[] authWhiteList = {"/login", "/register", "/attachment/**"};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -179,16 +179,4 @@ public class SnowFlakeUtil {
         return new Date(((TIME_BIT & id) >> 22) + INIT_EPOCH);
     }
 
-    public static void main(String[] args) {
-        SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil();
-        long id = snowFlakeUtil.nextId();
-        System.out.println(id);
-        Date date = SnowFlakeUtil.getTimeBySnowFlakeId(id);
-        System.out.println(date);
-        long time = date.getTime();
-        System.out.println(time);
-        System.out.println(getRandomStr());
-
-    }
-
 }

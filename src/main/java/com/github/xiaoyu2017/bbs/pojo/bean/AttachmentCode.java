@@ -2,6 +2,8 @@ package com.github.xiaoyu2017.bbs.pojo.bean;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 /**
  * TODO
  *
@@ -18,6 +20,11 @@ public enum AttachmentCode {
         this.value = value;
     }
 
+    public static AttachmentCode valueOf(int type) {
+        return Arrays.stream(AttachmentCode.values()).filter(i -> i.getCode() == type).findFirst().get();
+    }
+
     private final Integer code;
     private final String value;
+
 }

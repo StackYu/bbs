@@ -33,6 +33,7 @@ import java.util.Objects;
 public class AuthController {
 
     final AuthService authService;
+
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
@@ -75,7 +76,12 @@ public class AuthController {
         if (StringUtils.isBlank(loginVo.getUserName()) || StringUtils.isBlank(loginVo.getPassword())) {
             return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_400_2));
         }
-        String token = authService.verify(BeanTool.toTargetBean(loginVo, AuthDto.class));
+        String token;
+        try {
+            token = authService.verify(BeanTool.toTargetBean(loginVo, AuthDto.class));
+        } catch (Exception e) {
+            return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_500, e));
+        }
         if (StringUtils.isBlank(token)) {
             return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_500));
         }

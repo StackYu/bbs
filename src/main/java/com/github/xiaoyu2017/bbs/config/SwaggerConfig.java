@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 // select()函数返回一个ApiSelectorBuilder实例,用来控制接口被swagger做成文档
                 .select()
                 // 扫描指定包下的接口，最为常用
-                .apis(RequestHandlerSelectors.basePackage("com.github.xiaoyu2017.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.github.xiaoyu2017.bbs"))
                 //.withClassAnnotation(RestController.class) // 扫描带有指定注解的类下所有接口
                 //.withMethodAnnotation(PostMapping.class) // 扫描带有指定注解的方法接口
                 //.apis(RequestHandlerSelectors.any()) // 扫描所有

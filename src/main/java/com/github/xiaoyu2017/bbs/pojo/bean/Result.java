@@ -14,6 +14,7 @@ import java.util.Date;
 public class Result<T> {
     private String message;
     private String code;
+    private String exceptionMessage;
     private Integer error = 0;
     private T data;
     private Date time = new Date();
@@ -47,6 +48,15 @@ public class Result<T> {
         result.setMessage(resultCode.getMessage());
         result.setCode(resultCode.getCode());
         result.setError(1);
+        return result;
+    }
+
+    public static Result<String> error(ResultCode resultCode,Exception e) {
+        Result<String> result = new Result<>();
+        result.setMessage(resultCode.getMessage());
+        result.setCode(resultCode.getCode());
+        result.setError(1);
+        result.setExceptionMessage(e.getMessage());
         return result;
     }
 

@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String verify(AuthDto authDto) {
+    public String verify(AuthDto authDto) throws RuntimeException{
         UserBo userBo = BeanTool.toTargetBean(authDto, UserBo.class);
         // 设置密码MD5值
         userBo.setPassword(DigestUtils.md5DigestAsHex(userBo.getPassword().getBytes(StandardCharsets.UTF_8)));

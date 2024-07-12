@@ -10,6 +10,7 @@ import com.github.xiaoyu2017.bbs.server.AuthService;
 import com.github.xiaoyu2017.bbs.util.JsonUtils;
 import com.github.xiaoyu2017.bbs.util.JwtUtil;
 import com.github.xiaoyu2017.bbs.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,7 @@ import java.util.stream.Stream;
  * @author xiaoyu
  * @version 1.0
  */
+@Slf4j
 @Component
 public class AuthHandlerInterceptor implements HandlerInterceptor {
 
@@ -50,11 +52,18 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        String token = Stream.of(request.getCookies())
-                .filter(i -> i.getName().equals(StrUtil.USER_TOKEN))
-                .findFirst()
-                .get()
-                .getValue();
+        String token = null;
+        try {
+            token = Stream.of(request.getCookies())
+                    .filter(i -> i.getName().equals(StrUtil.USER_TOKEN))
+                    .findFirst()
+                    .get()
+                    .getValue();
+        } catch (Exception e) {
+            log.error("获得用户token失败！");
+            log.error("失败原因：" + e.getMessage());
+            return false;
+        }
         // token为空
         if (StringUtils.isBlank(token)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
