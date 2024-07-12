@@ -10,22 +10,13 @@
 
 ![Static Badge](https://img.shields.io/badge/jjwt-0.9.1-blue)
 
-# manager
+```shell
+# 测试环境
+java -jar bbs-1.0.0.jar --spring.profiles.active=test
 
-![Static Badge](https://img.shields.io/badge/vue-2.6.14-blue)
+# 开发环境
+java -jar bbs-1.0.0.jar --spring.profiles.active=dev
 
-![Static Badge](https://img.shields.io/badge/axios-1.7.2-blue)
-
-![Static Badge](https://img.shields.io/badge/core_js-3.8.3-blue)
-
-![Static Badge](https://img.shields.io/badge/element_ui-2.3.6-blue)
-
-![Static Badge](https://img.shields.io/badge/js_cookie-3.0.5-blue)
-
-![Static Badge](https://img.shields.io/badge/nprogress-0.2.0-blue)
-
-![Static Badge](https://img.shields.io/badge/vue_router-3.5.1-blue)
-
-![Static Badge](https://img.shields.io/badge/vuex-3.6.2-blue)
-
-# web
+# 生产环境
+java -jar bbs-1.0.0.jar --spring.profiles.active=prod
+```
