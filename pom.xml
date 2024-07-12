@@ -63,6 +63,16 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -94,7 +104,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.github.xiaoyu2017.bbs.BbsApplication</mainClass>
-                    <skip>true</skip>
+                    <!--                    <skip>true</skip>-->
                 </configuration>
                 <executions>
                     <execution>
