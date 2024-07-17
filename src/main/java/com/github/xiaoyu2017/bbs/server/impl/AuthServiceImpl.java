@@ -6,8 +6,9 @@ import com.github.xiaoyu2017.bbs.pojo.bean.BbsContext;
 import com.github.xiaoyu2017.bbs.pojo.bean.Payload;
 import com.github.xiaoyu2017.bbs.pojo.bo.UserBo;
 import com.github.xiaoyu2017.bbs.pojo.dao.UserDao;
-import com.github.xiaoyu2017.bbs.pojo.dto.AuthDto;
 import com.github.xiaoyu2017.bbs.pojo.dto.RegisterDto;
+import com.github.xiaoyu2017.bbs.pojo.vo.LoginVo;
+import com.github.xiaoyu2017.bbs.pojo.vo.UserVo;
 import com.github.xiaoyu2017.bbs.server.AuthService;
 import com.github.xiaoyu2017.bbs.tool.BeanTool;
 import com.github.xiaoyu2017.bbs.util.JwtUtil;
@@ -53,20 +54,40 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String verify(AuthDto authDto) throws RuntimeException{
-        UserBo userBo = BeanTool.toTargetBean(authDto, UserBo.class);
-        // 设置密码MD5值
-        userBo.setPassword(DigestUtils.md5DigestAsHex(userBo.getPassword().getBytes(StandardCharsets.UTF_8)));
+    public UserVo verify(LoginVo loginVo) throws RuntimeException {
+        UserBo userBo = BeanTool.toTargetBean(loginVo, UserBo.class);
+        if (loginVo.getCategory() == 0) {
+            // 设置密码MD5值
+            userBo.setPassword(DigestUtils.md5DigestAsHex(userBo.getPassword().getBytes(StandardCharsets.UTF_8)));
+        } else {
+            Payload<String> infoFromToken = JwtUtil.getInfoFromToken(loginVo.getRememberToken(), jwtConfig.getPublicKey(), String.class);
+            userBo.setPassword(infoFromToken.getUserInfo());
+        }
+
         UserDao resultUser = userMapper.getUserByUserNameAndPassword(userBo);
         if (resultUser != null) {
             // 返回JWT
             String token = JwtUtil.generateTokenExpireInMinutes(resultUser, jwtConfig.getPrivateKey(), jwtConfig.getUser().getExpire());
+            String rememberToken = null;
+            // 是否记住密码
+            if (loginVo.getRememberPassword()) {
+                // 三天过期时间
+                rememberToken = JwtUtil.generateTokenExpireInMinutes(resultUser.getPassword(), jwtConfig.getPrivateKey(), 60 * 24 * 3);
+            }
+
             // 保存信息
             BbsContext bbsContext = new BbsContext(token);
-            Payload<UserDao> infoFromToken = JwtUtil.getInfoFromToken(token, jwtConfig.getPublicKey(), UserDao.class);
-            bbsContext.setUserDao(infoFromToken.getUserInfo());
+            bbsContext.setUserDao(resultUser);
             BbsContext.set(bbsContext);
-            return token;
+
+            // 返回信息
+            UserVo userVo = new UserVo();
+            userVo.setUserName(resultUser.getUserName());
+            userVo.setPassword(resultUser.getPassword());
+            userVo.setToken(token);
+            userVo.setRememberToken(rememberToken);
+            userVo.setUid(resultUser.getUid());
+            return userVo;
         } else {
             return null;
         }

@@ -1,4 +1,4 @@
--- User
+-- UserDao
 CREATE TABLE IF NOT EXISTS `user`
 (
     `id`          INT AUTO_INCREMENT,
@@ -16,8 +16,113 @@ CREATE TABLE IF NOT EXISTS `user`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
--- 新增管理员用户
+-- AttachmentDao
+CREATE TABLE IF NOT EXISTS `attachment`
+(
+    `id`               INT AUTO_INCREMENT,
+    `create_time`      TIMESTAMP  DEFAULT current_timestamp,
+    `update_time`      TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`           INT        DEFAULT 0,
+    `order`            INT        DEFAULT 0,
+    `version`          INT        DEFAULT 0,
+    `delete`           TINYINT(1) DEFAULT 0,
 
+    `aid`              VARCHAR(50) UNIQUE,
+    `path`             VARCHAR(200),
+    `type`             TINYINT,
+    `originalFilename` VARCHAR(100),
+    `mime`             VARCHAR(50),
+    `size`             INT,
+    `sizeUnit`         VARCHAR(10),
+    `parent_id`        INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- MenuDao
+CREATE TABLE IF NOT EXISTS `menu`
+(
+    `id`            INT AUTO_INCREMENT,
+    `create_time`   TIMESTAMP  DEFAULT current_timestamp,
+    `update_time`   TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`        INT        DEFAULT 0,
+    `order`         INT        DEFAULT 0,
+    `version`       INT        DEFAULT 0,
+    `delete`        TINYINT(1) DEFAULT 0,
+
+    `menu_name`     VARCHAR(100) UNIQUE,
+    `menu_url`      VARCHAR(500),
+    `menu_id`       INT,
+    `system_infoId` INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- MenuMetaDao
+CREATE TABLE IF NOT EXISTS `menu_meta`
+(
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
+
+    `title`       VARCHAR(100) UNIQUE,
+    `icon`        VARCHAR(200),
+    `no_cache`    TINYINT(1),
+    `active_menu` TINYINT(1),
+    `menu_id`     INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- MenuVueDao
+CREATE TABLE IF NOT EXISTS `menu_vue`
+(
+    `id`             INT AUTO_INCREMENT,
+    `create_time`    TIMESTAMP  DEFAULT current_timestamp,
+    `update_time`    TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`         INT        DEFAULT 0,
+    `order`          INT        DEFAULT 0,
+    `version`        INT        DEFAULT 0,
+    `delete`         TINYINT(1) DEFAULT 0,
+
+    `component_path` VARCHAR(300),
+    `redirect`       VARCHAR(200),
+    `always_show`    VARCHAR(200),
+    `hidden`         TINYINT(1),
+    `has_children`   TINYINT(1),
+    `menu_id`        INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- SystemInfoDao
+CREATE TABLE IF NOT EXISTS `system_info`
+(
+    `id`             INT AUTO_INCREMENT,
+    `create_time`    TIMESTAMP  DEFAULT current_timestamp,
+    `update_time`    TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`         INT        DEFAULT 0,
+    `order`          INT        DEFAULT 0,
+    `version`        INT        DEFAULT 0,
+    `delete`         TINYINT(1) DEFAULT 0,
+
+    `systemId`       VARCHAR(300) UNIQUE,
+    `system_name`    VARCHAR(300) UNIQUE,
+    `url`            VARCHAR(300),
+    `link`           VARCHAR(300),
+    `system_info_id` INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+
+
+-- 以下旧的SQL
 
 -- UserInfo
 CREATE TABLE IF NOT EXISTS `user_info`

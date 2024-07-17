@@ -2,6 +2,8 @@ package com.github.xiaoyu2017.bbs.server;
 
 import com.github.xiaoyu2017.bbs.pojo.dto.AuthDto;
 import com.github.xiaoyu2017.bbs.pojo.dto.RegisterDto;
+import com.github.xiaoyu2017.bbs.pojo.vo.LoginVo;
+import com.github.xiaoyu2017.bbs.pojo.vo.UserVo;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +26,7 @@ public interface AuthService {
      * @param password 用户密码
      * @return 成功后的JWT字符串
      */
-    String verify(AuthDto authDto);
+    UserVo verify(LoginVo loginVo);
 
     /**
      * 验证token正确性

@@ -11,48 +11,57 @@ import java.util.Date;
  * @version 1.0
  */
 @Data
-public class Result<T> {
+public class Result {
     private String message;
     private String code;
     private String exceptionMessage;
     private Integer error = 0;
-    private T data;
+    private Object data;
     private Date time = new Date();
 
     public Result() {
     }
 
-    public Result(String message, String code, Integer error, T data) {
+    public Result(String message, String code, Integer error, Object data) {
         this.message = message;
         this.code = code;
         this.error = error;
         this.data = data;
     }
 
-    public Result(ResultCode resultCode, Integer error, T data) {
+    public Result(ResultCode resultCode, Integer error, Object data) {
         this.message = resultCode.getMessage();
         this.code = resultCode.getCode();
         this.error = error;
         this.data = data;
     }
 
-    public static Result<String> success(ResultCode resultCode) {
-        Result<String> result = new Result<>();
+    public static Result success(ResultCode resultCode) {
+        Result result = new Result();
         result.setMessage(resultCode.getMessage());
         result.setCode(resultCode.getCode());
         return result;
     }
 
-    public static Result<String> error(ResultCode resultCode) {
-        Result<String> result = new Result<>();
+    public static Result success(ResultCode resultCode, Object t) {
+        Result result = new Result();
+        result.setMessage(resultCode.getMessage());
+        result.setCode(resultCode.getCode());
+        result.setError(0);
+        result.setData(t);
+        return result;
+    }
+
+    public static Result error(ResultCode resultCode) {
+        Result result = new Result();
         result.setMessage(resultCode.getMessage());
         result.setCode(resultCode.getCode());
         result.setError(1);
         return result;
     }
 
-    public static Result<String> error(ResultCode resultCode,Exception e) {
-        Result<String> result = new Result<>();
+    public static Result error(ResultCode resultCode, Exception e) {
+        Result result = new Result();
         result.setMessage(resultCode.getMessage());
         result.setCode(resultCode.getCode());
         result.setError(1);
@@ -60,12 +69,4 @@ public class Result<T> {
         return result;
     }
 
-    public static <T> Result<T> success(ResultCode resultCode, T t) {
-        Result<T> result = new Result<>();
-        result.setMessage(resultCode.getMessage());
-        result.setCode(resultCode.getCode());
-        result.setError(1);
-        result.setData(t);
-        return result;
-    }
 }

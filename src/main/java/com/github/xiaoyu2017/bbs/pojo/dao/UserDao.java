@@ -1,5 +1,6 @@
 package com.github.xiaoyu2017.bbs.pojo.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.xiaoyu2017.bbs.pojo.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;

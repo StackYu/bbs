@@ -31,4 +31,7 @@ public class AttachmentDao extends BaseEntity implements Serializable {
     private Integer size;
     /** 文件大小单位 */
     private String sizeUnit;
+
+    /** 父对象ID */
+    private Integer parentId;
 }

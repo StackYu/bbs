@@ -21,4 +21,10 @@ public class UserVo implements Serializable {
     private String userName;
     @ApiModelProperty(value = "密码", required = true, example = "admin")
     private String password;
+    private String uid;
+
+    /** 用户登录token */
+    private String token;
+    /** 记住密码token */
+    private String rememberToken;
 }

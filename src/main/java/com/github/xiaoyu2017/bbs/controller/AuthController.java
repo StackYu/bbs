@@ -2,23 +2,27 @@ package com.github.xiaoyu2017.bbs.controller;
 
 import com.github.xiaoyu2017.bbs.pojo.bean.Result;
 import com.github.xiaoyu2017.bbs.pojo.bean.ResultCode;
-import com.github.xiaoyu2017.bbs.pojo.dto.AuthDto;
 import com.github.xiaoyu2017.bbs.pojo.dto.RegisterDto;
 import com.github.xiaoyu2017.bbs.pojo.vo.LoginVo;
 import com.github.xiaoyu2017.bbs.pojo.vo.RegisterVo;
+import com.github.xiaoyu2017.bbs.pojo.vo.UserVo;
 import com.github.xiaoyu2017.bbs.server.AuthService;
 import com.github.xiaoyu2017.bbs.tool.BeanTool;
 import com.github.xiaoyu2017.bbs.util.StrUtil;
+import io.jsonwebtoken.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.Objects;
 
 /**
@@ -46,7 +50,7 @@ public class AuthController {
      */
     @PostMapping("/register")
     @ApiOperation(value = "用户注册", notes = "用户注册")
-    public ResponseEntity<Result<String>> register(RegisterVo registerVo) {
+    public ResponseEntity<Result> register(RegisterVo registerVo) {
         if (Objects.isNull(registerVo)) {
             return ResponseEntity.ok(Result.error(ResultCode.REGISTER_ERROR_400_1));
         }
@@ -69,25 +73,28 @@ public class AuthController {
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    public ResponseEntity<Result<String>> login(HttpServletResponse response, LoginVo loginVo) {
+    public ResponseEntity<Result> login(HttpServletResponse response, LoginVo loginVo) {
         if (Objects.isNull(loginVo)) {
             return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_400_1));
         }
-        if (StringUtils.isBlank(loginVo.getUserName()) || StringUtils.isBlank(loginVo.getPassword())) {
-            return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_400_2));
+        if (loginVo.getCategory() == 0) {
+            if (StringUtils.isBlank(loginVo.getUserName()) || StringUtils.isBlank(loginVo.getPassword())) {
+                return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_400_2));
+            }
         }
-        String token;
+        UserVo userVo;
         try {
-            token = authService.verify(BeanTool.toTargetBean(loginVo, AuthDto.class));
+            userVo = authService.verify(loginVo);
         } catch (Exception e) {
             return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_500, e));
         }
-        if (StringUtils.isBlank(token)) {
+        if (userVo != null && StringUtils.isBlank(userVo.getUid())) {
             return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_500));
         }
-        Cookie cookie = new Cookie(StrUtil.USER_TOKEN, token);
+        Assert.notNull(userVo);
+        Cookie cookie = new Cookie(StrUtil.USER_TOKEN, userVo.getToken());
         response.addCookie(cookie);
-        return ResponseEntity.ok(Result.success(ResultCode.LOGIN_SUCCESS_200));
+        return ResponseEntity.ok(Result.success(ResultCode.LOGIN_SUCCESS_200, userVo));
     }
 
     /**
@@ -98,7 +105,7 @@ public class AuthController {
      */
     @GetMapping("/logout")
     @ApiOperation(value = "退出登录", notes = "退出登录")
-    public ResponseEntity<Result<String>> logout(HttpServletResponse response) {
+    public ResponseEntity<Result> logout(HttpServletResponse response) {
         if (authService.logout(response)) {
             return ResponseEntity.ok(Result.success(ResultCode.LOGOUT_SUCCESS_200));
         }

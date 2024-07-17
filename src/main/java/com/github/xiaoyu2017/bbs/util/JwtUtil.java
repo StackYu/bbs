@@ -32,7 +32,7 @@ public class JwtUtil {
      * @return JWT
      */
     public static String generateTokenExpireInMinutes(Object userInfo, PrivateKey privateKey, int expire) {
-        return generateTokenExpireInSeconds(userInfo, privateKey, expire * 60);
+        return generateTokenExpireInSeconds(userInfo, privateKey, expire);
     }
 
     /**
@@ -121,11 +121,11 @@ public class JwtUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        String x = "sasasasasasasasas";
+        /*String x = "sasasasasasasasas";
         String string = generateTokenExpireInSeconds(x, RsaUtil.getPrivateKey("/Users/yujiangzhong/IdeaProjects/Java/id_rsa"), 30);
-
+        System.out.println(string);*/
         PublicKey publicKey = RsaUtil.getPublicKey("/Users/yujiangzhong/IdeaProjects/Java/id_rsa.pub");
-        Payload<String> infoFromToken = getInfoFromToken("eyJhbGciOiJSUzI1NiJ9.eyJVU0VSX0lORk8iOiI1NjFiODQ2YWNhNGRkZWFhNGU0ODYzYzg2OWM5MmU2ZSIsImp0aSI6IlltSmhORFU1TURrdFpXRmhNeTAwT0RObExXSTJaV010WmpobE4ySmpZakUwT1RrNSIsImV4cCI6MTcyMTQxMTk1Nn0.kbBM3Mf6REOyDEdyYkwe2WR9UqNYjeW9BIhvQ_N68Lkms3HGCfCCpqZ_msdw37o4PUKNYC0V8ROi28qU9cABLbxJxWgukPp1aVX6lUsrDCJoiak4fBpIXmctsByo0UdV8sJBRoaLaEwig8Y883ssHF3PS6bv7ZKmUH8fuJpGbds4DpUlvwco5F2dbCGLaZg0CSBHjIW8BCM9FpZz6Sr_Q0QWs3XVdPj0za1LEKdRGD87kQo5w__BMQusKFikFw4CMvMG0DcPDzsuKcF7n6rIRbE8ufVcslhc-caeIgzzvvoTYIdik-uiKn3xMZJuOTXc1v1wCJe4L7wcIiGCMB_Ivw", publicKey, String.class);
+        Payload<String> infoFromToken = getInfoFromToken("eyJhbGciOiJSUzI1NiJ9.eyJVU0VSX0lORk8iOiI1NjFiODQ2YWNhNGRkZWFhNGU0ODYzYzg2OWM5MmU2ZSIsImp0aSI6IlpqUXlNalE0WkdNdE16azBPUzAwWVRKaExUZzRaREF0WTJNek1USm1NbUUyWldJMSIsImV4cCI6MTcyMTQ2Njg1MX0.imzrfWvGNkFqffgJGXmVHeZWaHlRde9BgcKdj52hDZ4xXY1Oe2k3TMPHJWQP7fu_W8E2Is6KKIXvffZ-ydTuS9jGQQk6oseILe2urQtKg3yvceeAcL7qCuPJxS8PqhlKC-p1tWJztTR3hPEo5TeK0gfyf6DOmNNfSB0Fw5qZ4Xns2poJC23ke6Rz-eTiEytvqTi5sH6lGzj3IoA-8AkDzBNbbBh_Bm_kRxYU7fI3ZYGCBAP20O0lo0RDMH9ucnIrlkKx5FDwNcwCLhT9keBCWcEv2ydW-1Wq1VSfX_yWein8g42h-PQymkxSqrgiQttIOMVnmJtzZnTDyh8Tz8WRKg", publicKey, String.class);
         System.out.println(infoFromToken.getUserInfo());
     }
 }
