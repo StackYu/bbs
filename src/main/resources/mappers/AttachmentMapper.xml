@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.xiaoyu2017.bbs.mapper.AttachmentMapper">
+<mapper namespace="com.stackyu.bbs.mapper.AttachmentMapper">
     <insert id="insert" parameterType="attachmentDao">
         INSERT INTO bbs.attachment(`aid`, `path`, `type`, `originalFilename`, `mime`, `size`, `sizeUnit`)
         VALUES

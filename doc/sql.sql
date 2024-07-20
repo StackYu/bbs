@@ -102,28 +102,145 @@ CREATE TABLE IF NOT EXISTS `menu_vue`
 -- SystemInfoDao
 CREATE TABLE IF NOT EXISTS `system_info`
 (
-    `id`             INT AUTO_INCREMENT,
-    `create_time`    TIMESTAMP  DEFAULT current_timestamp,
-    `update_time`    TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
-    `status`         INT        DEFAULT 0,
-    `order`          INT        DEFAULT 0,
-    `version`        INT        DEFAULT 0,
-    `delete`         TINYINT(1) DEFAULT 0,
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
 
-    `systemId`       VARCHAR(300) UNIQUE,
-    `system_name`    VARCHAR(300) UNIQUE,
-    `url`            VARCHAR(300),
-    `link`           VARCHAR(300),
-    `system_info_id` INT,
+    `system_id`   VARCHAR(300) UNIQUE,
+    `system_name` VARCHAR(300) UNIQUE,
+    `url`         VARCHAR(300),
+    `link`        VARCHAR(300),
+    `parent_id`   INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- Role
+CREATE TABLE IF NOT EXISTS `role`
+(
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
+
+    `role_id`     VARCHAR(300) UNIQUE,
+    `role_name`   VARCHAR(300),
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- Group
+CREATE TABLE IF NOT EXISTS `group`
+(
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
+
+    `group_id`    VARCHAR(300) UNIQUE,
+    `group_name`  VARCHAR(300),
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- User-Role
+CREATE TABLE IF NOT EXISTS `user_role`
+(
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
+
+    `user_id`     INT,
+    `role_id`     INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- User-Group
+CREATE TABLE IF NOT EXISTS `user_group`
+(
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
+
+    `user_id`     INT,
+    `group_id`    INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- Role-Group
+CREATE TABLE IF NOT EXISTS `role_group`
+(
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
+
+    `role_id`     INT,
+    `group_id`    INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- Role-Menu
+CREATE TABLE IF NOT EXISTS `role_menu`
+(
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
+
+    `role_id`     INT,
+    `menu_id`     INT,
+
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+-- Group-Menu
+CREATE TABLE IF NOT EXISTS `group_menu`
+(
+    `id`          INT AUTO_INCREMENT,
+    `create_time` TIMESTAMP  DEFAULT current_timestamp,
+    `update_time` TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`      INT        DEFAULT 0,
+    `order`       INT        DEFAULT 0,
+    `version`     INT        DEFAULT 0,
+    `delete`      TINYINT(1) DEFAULT 0,
+
+    `group_id`    INT,
+    `menu_id`     INT,
 
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
 
-
 -- 以下旧的SQL
-
 -- UserInfo
 CREATE TABLE IF NOT EXISTS `user_info`
 (
