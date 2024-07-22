@@ -1,18 +1,20 @@
 package com.stackyu.bbs.interceptor;
 
+import com.stackyu.bbs.config.JwtConfig;
 import com.stackyu.bbs.pojo.bean.BbsContext;
 import com.stackyu.bbs.pojo.bean.Payload;
 import com.stackyu.bbs.pojo.bean.Result;
 import com.stackyu.bbs.pojo.bean.ResultCode;
 import com.stackyu.bbs.pojo.dao.UserDao;
 import com.stackyu.bbs.server.AuthService;
-import com.stackyu.bbs.config.JwtConfig;
 import com.stackyu.bbs.util.JsonUtils;
 import com.stackyu.bbs.util.JwtUtil;
 import com.stackyu.bbs.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,7 +52,20 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/JavaScript; charset=utf-8");
         response.setCharacterEncoding("UTF-8");
+
+        // 如果是OPTIONS则结束请求
+        if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
+            // 不使用* ，否则无法发送和操作Cookie
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS");
+            response.setHeader("Access-Control-Max-Age", "86400");
+            response.setHeader("Access-Control-Allow-Headers", "*");
+            response.setStatus(HttpStatus.NO_CONTENT.value());
+            return true;
+        }
 
         String token = null;
         try {
@@ -62,6 +77,9 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             log.error("获得用户token失败！");
             log.error("失败原因：" + e.getMessage());
+            String string = JsonUtils.toString(Result.error(ResultCode.DONT_HAVE_PERMISSIONS_402));
+            response.getWriter()
+                    .write(string);
             return false;
         }
         // token为空
