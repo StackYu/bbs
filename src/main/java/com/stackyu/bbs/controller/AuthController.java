@@ -8,6 +8,7 @@ import com.stackyu.bbs.pojo.vo.RegisterVo;
 import com.stackyu.bbs.pojo.vo.UserVo;
 import com.stackyu.bbs.server.AuthService;
 import com.stackyu.bbs.tool.BeanTool;
+import com.stackyu.bbs.util.CookieUtil;
 import com.stackyu.bbs.util.StrUtil;
 import io.jsonwebtoken.lang.Assert;
 import io.swagger.annotations.Api;
@@ -89,6 +90,8 @@ public class AuthController {
             return ResponseEntity.ok(Result.error(ResultCode.LOGIN_ERROR_500));
         }
         Assert.notNull(userVo);
+        // 设置cookie
+//        CookieUtil.addCookie(response, StrUtil.USER_TOKEN, userVo.getToken());
         Cookie cookie = new Cookie(StrUtil.USER_TOKEN, userVo.getToken());
         response.addCookie(cookie);
         return ResponseEntity.ok(Result.success(ResultCode.LOGIN_SUCCESS_200, userVo));

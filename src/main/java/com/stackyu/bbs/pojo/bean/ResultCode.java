@@ -29,7 +29,8 @@ public enum ResultCode {
     LOGOUT_ERROR_500("200500", "服务器出错请稍等"),
 
     // 没有权限 3
-    DONT_HAVE_PERMISSIONS_401("300401", "无权访问"),
+    DONT_HAVE_PERMISSIONS_401("301400", "无权访问"),
+    DONT_HAVE_PERMISSIONS_402("302400", "需要登录"),
 
     // 用户注册 4
     REGISTER_SUCCESS_200("400200", "注册成功"),

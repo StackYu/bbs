@@ -30,7 +30,7 @@ public class SystemInfoServiceImpl implements SystemInfoService {
         QueryWrapper<SystemInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("`status`", 0);
         queryWrapper.eq("`delete`", 0);
-        queryWrapper.eq("`parent_id`", 0);
+        queryWrapper.isNull(("`parent_id`"));
         queryWrapper.orderByAsc("`create_time`");
         List<SystemInfo> systemInfos = systemInfoMapper.selectList(queryWrapper);
         return systemInfos.stream().map(i -> BeanTool.toTargetBean(i, SystemInfoVo.class)).collect(Collectors.toList());

@@ -121,11 +121,12 @@ public class JwtUtil {
     }
 
     public static void main(String[] args) throws Exception {
+        String token = "eyJhbGciOiJSUzI1NiJ9.eyJVU0VSX0lORk8iOiJ7XCJpZFwiOjQsXCJjcmVhdGVUaW1lXCI6MTcyMDI4MzQwNDAwMCxcInVwZGF0ZVRpbWVcIjoxNzIwMjgzNDA0MDAwLFwic3RhdHVzXCI6MCxcIm9yZGVyXCI6MCxcInZlcnNpb25cIjowLFwiZGVsZXRlXCI6ZmFsc2UsXCJ1c2VyTmFtZVwiOlwiZmlzaFwiLFwicGFzc3dvcmRcIjpcIjU2MWI4NDZhY2E0ZGRlYWE0ZTQ4NjNjODY5YzkyZTZlXCIsXCJ1aWRcIjpcIjI5MTM1NTgxMzQ4MDYzMjMyMFwifSIsImp0aSI6IlpEUmtNamczWldFdFlXUTJOeTAwT1RnMkxXRmlORGt0T1dNMU1UWTJOR0UwWXpVeSIsImV4cCI6MTcyMTYzODE0OX0.avCHRbS-tzE6XgD_jcofR6wJO9fwhCSXYhoD2QhVIc6oC-tXvx2E_Q8pHEyhZuodIk2W_HLtmU7euN-SDuabbPRJqUi1WPlsA7rhPv99gV55vfSeYG9KVWgACXYzLm-U5B8U0p5uk13TJbIcKVoBzpS5_0Ovpupnv2_e2wiIjOneQxnf1tEV4yVeJdfnpSCC5Oga9WvoKmZ54uWJmHMjPNSvKO2ZEy1zBiIAgKk6X4BFljP8tg-42_pJwwczyMEjD3zoyKTS-XZQJEUJaQO8OI6UaBIw01h69Dss7YoaVc2X6kwevG-NMf8zh8B95kVFU3u5150FHA-mtrYxX6Rl8Q";
         /*String x = "sasasasasasasasas";
         String string = generateTokenExpireInSeconds(x, RsaUtil.getPrivateKey("/Users/yujiangzhong/IdeaProjects/Java/id_rsa"), 30);
         System.out.println(string);*/
         PublicKey publicKey = RsaUtil.getPublicKey("/Users/yujiangzhong/IdeaProjects/Java/id_rsa.pub");
-        Payload<String> infoFromToken = getInfoFromToken("eyJhbGciOiJSUzI1NiJ9.eyJVU0VSX0lORk8iOiI1NjFiODQ2YWNhNGRkZWFhNGU0ODYzYzg2OWM5MmU2ZSIsImp0aSI6IlpqUXlNalE0WkdNdE16azBPUzAwWVRKaExUZzRaREF0WTJNek1USm1NbUUyWldJMSIsImV4cCI6MTcyMTQ2Njg1MX0.imzrfWvGNkFqffgJGXmVHeZWaHlRde9BgcKdj52hDZ4xXY1Oe2k3TMPHJWQP7fu_W8E2Is6KKIXvffZ-ydTuS9jGQQk6oseILe2urQtKg3yvceeAcL7qCuPJxS8PqhlKC-p1tWJztTR3hPEo5TeK0gfyf6DOmNNfSB0Fw5qZ4Xns2poJC23ke6Rz-eTiEytvqTi5sH6lGzj3IoA-8AkDzBNbbBh_Bm_kRxYU7fI3ZYGCBAP20O0lo0RDMH9ucnIrlkKx5FDwNcwCLhT9keBCWcEv2ydW-1Wq1VSfX_yWein8g42h-PQymkxSqrgiQttIOMVnmJtzZnTDyh8Tz8WRKg", publicKey, String.class);
+        Payload<String> infoFromToken = getInfoFromToken(token, publicKey, String.class);
         System.out.println(infoFromToken.getUserInfo());
     }
 }
