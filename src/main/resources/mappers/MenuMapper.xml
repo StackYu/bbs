@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stackyu.bbs.mapper.MenuMapper">
+    <resultMap id="menuBoList" type="menuBo">
+        <id column="m_id" property="id"/>
+        <result column="m_menu_name" property="menuName"/>
+        <result column="m_menu_url" property="menuUrl"/>
+        <association property="menuVue" javaType="menuVue">
+            <id column="mv_id" property="id"/>
+            <result column="mv_name" property="name"/>
+            <result column="mv_path" property="path"/>
+            <result column="mv_component_path" property="componentPath"/>
+            <result column="mv_always_show" property="alwaysShow"/>
+            <result column="mv_hidden" property="hidden"/>
+            <result column="mv_has_children" property="hasChildren"/>
+            <result column="mv_menu_id" property="menuId"/>
+        </association>
+        <association property="menuMeta" javaType="menuMeta">
+            <id column="mm_id" property="id"/>
+            <result column="mm_title" property="title"/>
+            <result column="mm_icon" property="icon"/>
+            <result column="mm_no_cache" property="noCache"/>
+            <result column="mm_active_menu" property="activeMenu"/>
+            <result column="mm_menu_id" property="menuId"/>
+        </association>
+        <collection property="children" select="com.stackyu.bbs.mapper.MenuMapper.selectMenuById" column="m_id"/>
+    </resultMap>
+    <select id="selectMenuBySystemInfoId" resultMap="menuBoList">
+        SELECT
+        <include refid="menuField"/>,
+        <include refid="menuMetaField"/>,
+        <include refid="menuVueField"/>
+        FROM bbs.menu m
+        LEFT JOIN bbs.menu_meta mm ON m.id = mm.menu_id
+        LEFT JOIN bbs.menu_vue mv ON m.id = mv.menu_id
+        LEFT JOIN bbs.menu childrenMenu ON m.id = childrenMenu.parent_id
+        WHERE m.system_info_id = #{systemInfo};
+    </select>
+    <select id="selectMenuById" resultMap="menuBoList">
+        SELECT
+        <include refid="menuField"/>,
+        <include refid="menuMetaField"/>,
+        <include refid="menuVueField"/>
+        FROM bbs.menu m
+        LEFT JOIN bbs.menu_meta mm ON m.id = mm.menu_id
+        LEFT JOIN bbs.menu_vue mv ON m.id = mv.menu_id
+        LEFT JOIN bbs.menu childrenMenu ON m.id = childrenMenu.parent_id
+        WHERE m.parent_id = #{id};
+    </select>
+
+    <sql id="menuField">
+        m.id m_id,
+        m.create_time m_create_time,
+        m.update_time m_update_time,
+        m.status m_status,
+        m.order m_order,
+        m.version m_version,
+        m.delete m_delete,
+        m.menu_name m_menu_name,
+        m.menu_url m_menu_url,
+        m.parent_id m_parent_id,
+        m.system_info_id m_system_info_id
+    </sql>
+    <sql id="menuMetaField">
+        mm.id mm_id,
+        mm.create_time mm_create_time,
+        mm.update_time mm_update_time,
+        mm.status mm_status,
+        mm.order mm_order,
+        mm.version mm_version,
+        mm.delete mm_delete,
+        mm.title mm_title,
+        mm.icon mm_icon,
+        mm.no_cache mm_no_cache,
+        mm.active_menu mm_active_menu,
+        mm.menu_id mm_menu_id
+    </sql>
+    <sql id="menuVueField">
+        mv.id mv_id,
+        mv.create_time mv_create_time,
+        mv.update_time mv_update_time,
+        mv.status mv_status,
+        mv.order mv_order,
+        mv.version mv_version,
+        mv.delete mv_delete,
+        mv.name mv_name,
+        mv.path mv_path,
+        mv.component_path mv_component_path,
+        mv.redirect mv_redirect,
+        mv.always_show mv_always_show,
+        mv.hidden mv_hidden,
+        mv.has_children mv_has_children,
+        mv.menu_id mv_menu_id
+    </sql>
+</mapper>

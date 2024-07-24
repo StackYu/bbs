@@ -1,6 +1,6 @@
 package com.stackyu.bbs.pojo.bo;
 
-import com.stackyu.bbs.pojo.BaseEntity;
+import com.stackyu.bbs.pojo.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -39,26 +39,26 @@ CREATE TABLE IF NOT EXISTS `attachment`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
--- MenuDao
+-- Menu
 CREATE TABLE IF NOT EXISTS `menu`
 (
-    `id`            INT AUTO_INCREMENT,
-    `create_time`   TIMESTAMP  DEFAULT current_timestamp,
-    `update_time`   TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
-    `status`        INT        DEFAULT 0,
-    `order`         INT        DEFAULT 0,
-    `version`       INT        DEFAULT 0,
-    `delete`        TINYINT(1) DEFAULT 0,
+    `id`             INT AUTO_INCREMENT,
+    `create_time`    TIMESTAMP  DEFAULT current_timestamp,
+    `update_time`    TIMESTAMP  DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+    `status`         INT        DEFAULT 0,
+    `order`          INT        DEFAULT 0,
+    `version`        INT        DEFAULT 0,
+    `delete`         TINYINT(1) DEFAULT 0,
 
-    `menu_name`     VARCHAR(100) UNIQUE,
-    `menu_url`      VARCHAR(500),
-    `menu_id`       INT,
-    `system_infoId` INT,
+    `menu_name`      VARCHAR(100),
+    `menu_url`       VARCHAR(500),
+    `parent_id`      INT,
+    `system_info_id` INT,
 
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
--- MenuMetaDao
+-- MenuMeta
 CREATE TABLE IF NOT EXISTS `menu_meta`
 (
     `id`          INT AUTO_INCREMENT,
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `menu_meta`
     `version`     INT        DEFAULT 0,
     `delete`      TINYINT(1) DEFAULT 0,
 
-    `title`       VARCHAR(100) UNIQUE,
+    `title`       VARCHAR(100),
     `icon`        VARCHAR(200),
     `no_cache`    TINYINT(1),
     `active_menu` TINYINT(1),
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `menu_meta`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
--- MenuVueDao
+-- MenuVue
 CREATE TABLE IF NOT EXISTS `menu_vue`
 (
     `id`             INT AUTO_INCREMENT,
@@ -89,6 +89,8 @@ CREATE TABLE IF NOT EXISTS `menu_vue`
     `version`        INT        DEFAULT 0,
     `delete`         TINYINT(1) DEFAULT 0,
 
+    `name`           VARCHAR(300),
+    `path`           VARCHAR(300),
     `component_path` VARCHAR(300),
     `redirect`       VARCHAR(200),
     `always_show`    VARCHAR(200),

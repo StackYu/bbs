@@ -23,9 +23,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authHandlerInterceptor)
+        /*registry.addInterceptor(authHandlerInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns(authWhiteList);
+                .excludePathPatterns(authWhiteList);*/
     }
 
 }

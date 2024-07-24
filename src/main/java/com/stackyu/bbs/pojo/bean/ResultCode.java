@@ -57,7 +57,16 @@ public enum ResultCode {
     SYSTEM_INFO_SUCCESS_200_3("703200", "修改系统信息成功"),
     SYSTEM_INFO_ERROR_400_1("700401", "系统信息ID不能为空"),
     SYSTEM_INFO_ERROR_400_2("700402", "删除系统信息失败"),
-    SYSTEM_INFO_ERROR_500("700500", "获得系统信息失败，请稍后再试");
+    SYSTEM_INFO_ERROR_500("700500", "获得系统信息失败，请稍后再试"),
+
+    // 菜单 Menu
+    MENU_SUCCESS_200("800200", "获得菜单成功"),
+    MENU_SUCCESS_200_1("801200", "新增菜单成功"),
+    MENU_SUCCESS_200_2("802200", "删除菜单成功"),
+    MENU_SUCCESS_200_3("803200", "修改菜单成功"),
+    MENU_ERROR_400_1("801400", "菜单ID不能为空"),
+    MENU_ERROR_400_2("802400", "删除菜单失败"),
+    MENU_ERROR_500("800500", "获得菜单失败，请稍后再试");
 
     ResultCode(String code, String message) {
         this.code = code;

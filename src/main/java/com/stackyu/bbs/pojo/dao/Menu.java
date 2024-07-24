@@ -1,6 +1,6 @@
 package com.stackyu.bbs.pojo.dao;
 
-import com.stackyu.bbs.pojo.BaseEntity;
+import com.stackyu.bbs.pojo.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MenuDao extends BaseEntity implements Serializable {
+public class Menu extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 4734581510896574763L;
 
     /** 菜单名称（唯一） */
@@ -26,4 +26,5 @@ public class MenuDao extends BaseEntity implements Serializable {
     private Integer parentId;
     /** SystemInfo id */
     private Integer systemInfoId;
+
 }
