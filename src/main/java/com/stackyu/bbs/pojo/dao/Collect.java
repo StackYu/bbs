@@ -1,7 +1,7 @@
 package com.stackyu.bbs.pojo.dao;
 
 import com.stackyu.bbs.pojo.bean.CollectCode;
-import com.stackyu.bbs.pojo.BaseEntity;
+import com.stackyu.bbs.pojo.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

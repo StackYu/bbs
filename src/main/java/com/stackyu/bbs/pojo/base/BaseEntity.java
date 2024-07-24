@@ -1,4 +1,4 @@
-package com.stackyu.bbs.pojo;
+package com.stackyu.bbs.pojo.base;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 public class BaseEntity {
     /** ID */
-    @TableId(type = IdType.AUTO)
+    @TableId(value = "id",type = IdType.AUTO)
     protected Integer id;
     /** 创建时间 */
     protected Date createTime;
