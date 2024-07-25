@@ -26,6 +26,8 @@ public class MenuVo {
     private Integer parentId;
     /** SystemInfo id */
     private Integer systemInfoId;
+    /** 路由名称 */
+    private String name;
     /** 路由路径 */
     private String path;
     /** 菜单组件路径 */

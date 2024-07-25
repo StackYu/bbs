@@ -56,6 +56,7 @@ public class BeanTool {
             menuVo.setSystemInfoId(systemInfoId);
 
             if (ObjectUtils.isNotEmpty(menuBo.getMenuVue())) {
+                menuVo.setName(menuBo.getMenuVue().getName());
                 menuVo.setPath(menuBo.getMenuVue().getPath());
                 menuVo.setComponentPath(menuBo.getMenuVue().getComponentPath());
                 menuVo.setRedirect(menuBo.getMenuVue().getRedirect());
