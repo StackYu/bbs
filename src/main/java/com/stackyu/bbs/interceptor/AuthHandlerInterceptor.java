@@ -59,6 +59,8 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
             // 不使用* ，否则无法发送和操作Cookie
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:8000");
+            response.setHeader("Access-Control-Allow-Origin", "http://192.168.0.1");
+            response.setHeader("Access-Control-Allow-Origin", "http://192.168.0.1:8000");
             response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS");
             response.setHeader("Access-Control-Max-Age", "86400");

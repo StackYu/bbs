@@ -18,6 +18,8 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 // 允许任何域名,不要写*，否则cookie就无法使用了
                 .allowedOrigins("http://localhost:8000")
+                .allowedOrigins("http://192.168.0.124:8000")
+                .allowedOrigins("http://192.168.0.124")
                 // 允许的请求方法
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
                 // 允许的请求头
