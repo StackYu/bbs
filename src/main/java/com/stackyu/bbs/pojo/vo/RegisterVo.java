@@ -13,4 +13,6 @@ public class RegisterVo {
     private String permissionsCode;
     private String userName;
     private String password;
+    private String password1;
+    private String password2;
 }

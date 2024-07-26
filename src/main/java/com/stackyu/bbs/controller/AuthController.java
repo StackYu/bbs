@@ -8,7 +8,6 @@ import com.stackyu.bbs.pojo.vo.RegisterVo;
 import com.stackyu.bbs.pojo.vo.UserVo;
 import com.stackyu.bbs.server.AuthService;
 import com.stackyu.bbs.tool.BeanTool;
-import com.stackyu.bbs.util.CookieUtil;
 import com.stackyu.bbs.util.StrUtil;
 import io.jsonwebtoken.lang.Assert;
 import io.swagger.annotations.Api;
@@ -55,8 +54,14 @@ public class AuthController {
         if (!StrUtil.userNameVerify(registerVo.getUserName())) {
             return ResponseEntity.ok(Result.error(ResultCode.REGISTER_ERROR_400_2));
         }
-        if (!StrUtil.passwordVerify(registerVo.getPassword())) {
+        if (!StrUtil.passwordVerify(registerVo.getPassword1())) {
             return ResponseEntity.ok(Result.error(ResultCode.REGISTER_ERROR_400_3));
+        }
+        if (!StrUtil.passwordVerify(registerVo.getPassword2())) {
+            return ResponseEntity.ok(Result.error(ResultCode.REGISTER_ERROR_400_3));
+        }
+        if (registerVo.getPassword1().equals(registerVo.getPassword2())) {
+            registerVo.setPassword(registerVo.getPassword1());
         }
         boolean register = authService.register(BeanTool.toTargetBean(registerVo, RegisterDto.class));
         return register ? ResponseEntity.ok(Result.success(ResultCode.REGISTER_SUCCESS_200)) : ResponseEntity.ok(Result.error(ResultCode.REGISTER_ERROR_500));
